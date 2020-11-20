@@ -1,0 +1,92 @@
+import win.ui;
+/*DSG{{*/
+mainForm = win.form(text="休息一下-设置";right=419;bottom=550)
+mainForm.add(
+button={cls="button";text="quite";left=295;top=493;right=407;bottom=532;z=1};
+button2={cls="button";text="Button";left=54;top=377;right=240;bottom=459;z=2};
+button3={cls="button";text="Button";left=276;top=76;right=369;bottom=172;z=3};
+button4={cls="button";text="Button";left=527;top=176;right=588;bottom=214;z=4}
+)
+/*}}*/
+
+import thread;
+import win.util.tray;
+var tray = win.util.tray(mainForm);//创建托盘图标 
+tray.message = 0xACCF/*_WM_TRAYMESSAGE*/
+tray.tip = "休息提醒" //设置鼠标提示 
+
+import thread.command;
+var listener = thread.command();
+listener.showCountdownPop = function(modeName,time_ms){
+    		thread.invoke( 
+    			function(time_ms,modeName){
+    				import win.util.tray;
+    				var tray = win.util.tray();
+    				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+modeName+"!")
+			sleep(5000-100);//提早关闭pop
+			tray.pop("","");
+			return true; 
+    			}
+    		,modeName,time_ms)
+}
+
+mainForm.button.oncommand = function(id,event){
+	tray.delete();
+	win.quitMessage();
+}
+
+
+
+mainForm.button2.oncommand = function(id,event){
+	
+var frmSetting = mainForm.loadForm("\dlg\setting.aardio");// setting
+frmSetting.show();
+}
+
+
+
+mainForm.button3.oncommand = function(id,event){ 
+	tray.pop("欢迎使用托盘图标")
+	tray.message = 0xACCF/*_WM_TRAYMESSAGE*/
+	tray.tip = "鼠标提示" //设置鼠标提示 
+	sleep(5000)
+	tray.pop("","")
+}
+
+mainForm.button4.oncommand = function(id,event){ 
+	tray.pop("","")
+}
+mainForm.wndproc = {
+	[0xACCF/*_WM_TRAYMESSAGE*/ ] = function(hwnd,message,wParam,lParam){
+		if( lParam = 0x205/*_WM_RBUTTONUP*/ ){ 
+	    	var pt = ::POINT();
+			::User32.GetCursorPos(pt);
+	    	
+	    	
+	    	//弹出托盘菜单以前,一定要前置主窗口中,不然不点击菜单不会消失
+	    	win.setForeground(mainForm.hwnd)
+	    	mainForm.popmenu.popup(pt.x,pt.y,true )
+	    }	
+	}
+}
+
+mainForm.popmenu = win.ui.popmenu(mainForm);//创建弹出菜单
+
+mainForm.popmenu.addTable( {
+	{ "设置";  function(id){
+		var frmSetting = mainForm.loadForm("\dlg\setting.aardio");// setting
+		frmSetting.show(true);
+	} }; { /*分隔线*/ }
+	{ "退出"; function(id){  
+		tray.delete();
+		win.quitMessage();
+ 	} };
+} );//分隔线
+
+
+
+mainForm.show();
+
+
+
+return win.loopMessage();
