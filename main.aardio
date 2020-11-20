@@ -5,7 +5,8 @@ mainForm.add(
 button={cls="button";text="quite";left=295;top=493;right=407;bottom=532;z=1};
 button2={cls="button";text="Button";left=54;top=377;right=240;bottom=459;z=2};
 button3={cls="button";text="Button";left=276;top=76;right=369;bottom=172;z=3};
-button4={cls="button";text="Button";left=527;top=176;right=588;bottom=214;z=4}
+button4={cls="button";text="Button";left=527;top=176;right=588;bottom=214;z=4};
+button5={cls="button";text="Button";left=40;top=96;right=120;bottom=120;z=5}
 )
 /*}}*/
 
@@ -19,7 +20,7 @@ import thread.command;
 var listener = thread.command();
 listener.showCountdownPop = function(modeName,time_ms){
     		thread.invoke( 
-    			function(time_ms,modeName){
+    			function(modeName,time_ms){
     				import win.util.tray;
     				var tray = win.util.tray();
     				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+modeName+"!")
@@ -83,7 +84,12 @@ mainForm.popmenu.addTable( {
  	} };
 } );//分隔线
 
+mainForm.button5.oncommand = function(id,event){
+	
+var frmChild = mainForm.loadForm("\dlg\test.aardio");
+frmChild.show();
 
+}
 
 mainForm.show();
 

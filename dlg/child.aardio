@@ -79,7 +79,7 @@ winform.static.wndproc = function(hwnd,message,wParam,lParam){
 }
 winform.wndproc = function(hwnd,message,wParam,lParam){ 
 	if(message=0x18/*_WM_SHOWWINDOW*/&&wParam=true){
-		win.msgbox("22")
+		//win.msgbox("22")
 	}
 }
 winform.setInterval( 

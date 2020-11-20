@@ -2,51 +2,24 @@ import win.ui;
 /*DSG{{*/
 var winform = win.form(text="线程命令";right=599;bottom=503)
 winform.add(
-button2={cls="button";text="Button";left=312;top=408;right=400;bottom=472;z=2};
-edit={cls="edit";left=12;top=11;right=588;bottom=389;db=1;dl=1;dr=1;dt=1;edge=1;multiline=1;z=1}
+button={cls="button";text="waitOne";left=184;top=144;right=352;bottom=216;z=1};
+button2={cls="button";text="wait";left=184;top=296;right=352;bottom=392;z=2}
 )
 /*}}*/
 
-import win.util.tray;
-var tray = win.util.tray(mainForm);//创建托盘图标 
-tray.message = 0xACCF/*_WM_TRAYMESSAGE*/
-tray.tip = "休息提醒" //设置鼠标提示 
+import thread.event;
+var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 
-import thread.command;
-var listener = thread.command();
-listener.showCountdownPop = function(modeName,time_ms){
-    
-    		
-    		thread.invoke( 
-    			function(tray,time_ms,modeName){
-    				import win.util.tray;
-    				var tray = win.util.tray(winform);
-    				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+modeName+"!")
-			sleep(5000-100);//提早关闭pop
-			tray.pop("","");
-			return true; 
-    			}
-    		,winform,time_ms,modeName)
+winform.button.oncommand = function(id,event){
+	timeEvent.waitOne(5000);
+	win.msgbox("waitOne")
 }
 
-
-
 winform.button2.oncommand = function(id,event){
-	//创建工作线程
-thread.invoke(
-
-    function(){
-   
-        //必须在线程函数内部导入需要的库
-        import thread.command;
-        
-        //调用界面线程的命令
-        thread.command.showCountdownPop("hello world",30000);
-        win.msgbox("finash")
-    }
-)
-
+	timeEvent.wait(5000);
+	win.msgbox("wait")
 }
 
 winform.show();
+
 win.loopMessage();
