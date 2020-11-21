@@ -22,6 +22,7 @@ import thread.table;
 var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 var shareT = thread.table("shareT");
 var inTime=-1;
+var remainNum=0;
 winform.progress.setProgressRange(0,1000);
 
 // 屏蔽 alt + F4；设置 ctrl + x 关闭
@@ -72,7 +73,7 @@ winform.wndproc = function(hwnd,message,wParam,lParam){
 		
 		winform.progress.stepProgress(1000);
 		inTime=time().getMilliTime();
-		
+		remainNum=shareT.showTime/1000;
 	}elseif(message=0x18/*_WM_SHOWWINDOW*/&&wParam=false){
 		inTime=-1;
 	}
@@ -86,9 +87,13 @@ winform.setInterval(
 			winform.time.text=tostring(time(,"%H:%M:%S"));
 			winform.date.text=tostring(time(,"%Y-%m-%d, %A"));
 			
-			var remainNum= shareT.showTime-(time().getMilliTime()-inTime);
+			//var remainNum= shareT.showTime-(time().getMilliTime()-inTime)
+			
 			winform.progress.stepProgress(-math.round(1000/(shareT.showTime/1000+1)));
-			winform.static2.text=math.round(remainNum/1000)+"s";
+
+			
+			winform.static2.text=math.round(remainNum)+"s";
+			remainNum-=1;
 		}
 	} 
 )
