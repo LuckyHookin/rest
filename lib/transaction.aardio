@@ -24,7 +24,6 @@ namespace transaction{
 		config.setting.rest.mode="anap";
 		config.setting.rest.free_anap=2;
 		config.setting.rest.time_m=5;
-		config.setting.rest.lock=true;
 		
 		config.setting.late={};
 		config.setting.late.anap=true;
@@ -95,7 +94,6 @@ namespace transaction{
 							shareT.showTime=config.setting.rest.time_m*60*1000;
 							shareT.hasLate=config.setting.late.rest;
 							shareT.hasPass=config.setting.pass.rest;
-							shareT.hasLock==config.setting.rest.lock;
 							shareT.modeName="rest";
 							console.log("休息")
 							thread.command.showCountdownPop(shareT.modeName,30000);
