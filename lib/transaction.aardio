@@ -1,7 +1,9 @@
 ﻿
 namespace transaction{
     import console;
+    import win;
     import fsys.config;
+    import thread;
     
 	function getConfig(){
 		
@@ -39,7 +41,10 @@ namespace transaction{
 			//将一个函数写入线程共享区(通常应当在主线程中一次性写入)
 		//thread.set("anapLateNum", 0);
 		
-		thread.init(anap);
+		win.invoke( 
+			anap
+		)
+		
 	};
 	function stop(){
 		
@@ -49,6 +54,8 @@ namespace transaction{
 		import win;
 		import table;
 		import thread;
+		import thread.command;
+		import thread.table;
 		import fsys.config;
 		import sys.monitor;
 		import thread.event;
@@ -88,7 +95,8 @@ namespace transaction{
 							shareT.showTime=config.setting.rest.time_m*60*1000;
 							shareT.hasLate=config.setting.late.rest;
 							shareT.hasPass=config.setting.pass.rest;
-							shareT.modeName="休息";
+							shareT.hasLock==config.setting.rest.lock;
+							shareT.modeName="rest";
 							console.log("休息")
 							thread.command.showCountdownPop(shareT.modeName,30000);
 							sleep(30000)
@@ -96,7 +104,7 @@ namespace transaction{
 							shareT.showTime=config.setting.anap.time_s*1000;
 							shareT.hasLate=config.setting.late.anap;
 							shareT.hasPass=config.setting.pass.anap;
-							shareT.modeName="小憩";
+							shareT.modeName="anap";
 							console.log("小憩")
 							sleep(20000)
 							thread.command.showCountdownPop(shareT.modeName,10000);
@@ -109,7 +117,12 @@ namespace transaction{
 							console.log("win.show",shareT.hasLate,shareT.lateNum,shareT.showTime);
 						}
 						
-						while(timeEvent.wait(shareT.showTime)&&shareT.hasLate){
+						
+						//创建工作线程防止wait阻塞
+						win.invoke(
+							function(timeEvent,shareT,frmChildenArr){
+							import win;
+							while(timeEvent.wait(shareT.showTime)&&shareT.hasLate){
 							if(shareT.lateNum<2){//可以稍等2次
 								shareT.lateNum+=1;
 								for(index,frmChild in frmChildenArr){
@@ -124,7 +137,11 @@ namespace transaction{
 								shareT.lateNum=0;
 								break;
 							}
-						}
+							}
+							} 
+						,timeEvent,shareT,frmChildenArr);
+						
+						
 						
 						for(index,frmChild in frmChildenArr){
 							frmChild.show(false);

@@ -3,7 +3,8 @@ import win.ui;
 var winform = win.form(text="线程命令";right=599;bottom=503)
 winform.add(
 button={cls="button";text="waitOne";left=184;top=144;right=352;bottom=216;z=1};
-button2={cls="button";text="wait";left=184;top=296;right=352;bottom=392;z=2}
+button2={cls="button";text="wait";left=184;top=296;right=352;bottom=392;z=2};
+button3={cls="button";text="Button";left=160;top=424;right=504;bottom=472;z=3}
 )
 /*}}*/
 
@@ -18,6 +19,32 @@ winform.button.oncommand = function(id,event){
 winform.button2.oncommand = function(id,event){
 	timeEvent.wait(5000);
 	win.msgbox("wait")
+}
+
+winform.button3.oncommand = function(id,event){
+	import sys.monitor;
+		import thread.event;
+		import console;
+		
+		
+		var frmChildenArr={};
+		for( hMonitor,monitorInfo in sys.monitor.eachInfo() ){
+			console.log("for")
+			
+			var frmChild = win.loadForm("\dlg\child.aardio");
+			//frmChild.enableDpiScaling(false)
+			
+			
+			table.push(frmChildenArr,frmChild)
+			
+			frmChild.show()
+			//frmChild.enableDpiScaling(false)
+			//win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
+			//win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
+			//win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
+			//frmChild.show(false)
+			console.log("for end")
+		}
 }
 
 winform.show();

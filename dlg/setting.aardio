@@ -194,7 +194,7 @@ winform.apple.oncommand = function(id,event){
 	stopEvent.set();
 	win.delay(1000)
 	//thread.create(anap,winform,transaction.getConfig())
-	transaction.anap();
+	transaction.start();
 }
 
 

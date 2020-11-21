@@ -22,11 +22,18 @@ listener.showCountdownPop = function(modeName,time_ms){
     		thread.invoke( 
     			function(modeName,time_ms){
     				import win.util.tray;
+    				var name;
+    				if(modeName=="anap"){
+    					name="小憩"
+    				}else {
+    					name="休息"
+    				}
+    				
     				var tray = win.util.tray();
-    				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+modeName+"!")
-			sleep(5000-100);//提早关闭pop
-			tray.pop("","");
-			return true; 
+    				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+name+"!")
+					sleep(5000-100);//提早关闭pop
+					tray.pop("","");
+					return true; 
     			}
     		,modeName,time_ms)
 }
