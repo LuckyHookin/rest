@@ -1,6 +1,6 @@
 ﻿{
-anap={time_s="6";free_m="1";userd=1};
+anap={time_s="6";userd=1;free_m="1"};
 late={anap=1;rest=0};
-rest={userd=1;time_m="5";mode="anap";lock=1;free_anap="2"};
+rest={userd=1;time_m="5";mode="anap";free_anap="2";lock=1};
 pass={anap=1;rest=0}
 }

@@ -21,6 +21,8 @@ import thread.event;
 import thread.table;
 var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 var shareT = thread.table("shareT");
+var inTime=-1;
+winform.progress.setProgressRange(0,1000);
 
 // 屏蔽 alt + F4；设置 ctrl + x 关闭
 import win.ui.accelerator;
@@ -34,13 +36,11 @@ var accelerator = win.ui.accelerator({
 },winform );
 
 winform.button2.oncommand = function(id,event){
-    import sys.monitor;
-	..win.setRect(winform.hwnd,sys.monitor.getInfoFromWindow( winform.hwnd).rcMonitor);
+    
 	//winform.msgbox(::GetSystemMetrics(80))
 
 	//设置进度区间，可自动切换到进度条显示模式
-	winform.progress.setProgressRange(1,1000);
-	winform.progress.stepProgress(1000)
+	
 	winform.progress.startProgress(,-1)
 
 	win.delay(10000);
@@ -54,19 +54,7 @@ winform.button2.oncommand = function(id,event){
 
 
 winform.static.oncommand = function(id,event){
-	/*
-winform.close();
-*/
-	/*
-LockWorkStation= ::User32.api("LockWorkStation","int()");
-	LockWorkStation()
-*/
 
-	/*
-thread.set("anapLateNum",thread.get("anapLateNum")+1)
-	thread.set("anapLated",true);
-	winform.msgbox(thread.get("anapLateNum"))
-*/
 shareT.lateNum=shareT.lateNum+1;
 timeEvent.set();
 }
@@ -79,14 +67,29 @@ winform.static.wndproc = function(hwnd,message,wParam,lParam){
 }
 winform.wndproc = function(hwnd,message,wParam,lParam){ 
 	if(message=0x18/*_WM_SHOWWINDOW*/&&wParam=true){
-		//win.msgbox("22")
+		import sys.monitor;
+		win.setRect(winform.hwnd,sys.monitor.getInfoFromWindow( winform.hwnd).rcMonitor);
+		
+		winform.progress.stepProgress(1000);
+		inTime=time().getMilliTime();
+		
+	}elseif(message=0x18/*_WM_SHOWWINDOW*/&&wParam=false){
+		inTime=-1;
 	}
+	
 }
 winform.setInterval( 
 	1000,function(){
 		import time;
-		winform.time.text=tostring(time(,"%H:%M:%S"));
-		winform.date.text=tostring(time(,"%Y-%m-%d, %A"));
+		
+		if(inTime!=-1){
+			winform.time.text=tostring(time(,"%H:%M:%S"));
+			winform.date.text=tostring(time(,"%Y-%m-%d, %A"));
+			
+			var remainNum= shareT.showTime-(time().getMilliTime()-inTime);
+			winform.progress.stepProgress(-math.round(1000/(shareT.showTime/1000+1)));
+			winform.static2.text=math.round(remainNum/1000)+"s";
+		}
 	} 
 )
 

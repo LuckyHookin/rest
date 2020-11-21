@@ -68,7 +68,6 @@ namespace transaction{
 			var frmChild = win.loadForm("\dlg\child.aardio");
 			win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
 			table.push(frmChildenArr,frmChild)
-			win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
 			console.log("for end")
 		}
 		

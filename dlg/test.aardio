@@ -4,7 +4,9 @@ var winform = win.form(text="线程命令";right=599;bottom=503)
 winform.add(
 button={cls="button";text="waitOne";left=184;top=144;right=352;bottom=216;z=1};
 button2={cls="button";text="wait";left=184;top=296;right=352;bottom=392;z=2};
-button3={cls="button";text="Button";left=160;top=424;right=504;bottom=472;z=3}
+button3={cls="button";text="Button";left=160;top=424;right=504;bottom=472;z=3};
+button4={cls="button";text="Button";left=400;top=336;right=560;bottom=384;z=5};
+progress={cls="plus";left=56;top=40;right=528;bottom=56;forecolor=32768;z=4}
 )
 /*}}*/
 
@@ -20,7 +22,8 @@ winform.button2.oncommand = function(id,event){
 	timeEvent.wait(5000);
 	win.msgbox("wait")
 }
-
+winform.progress.setProgressRange(1,100);
+		winform.progress.stepProgress(100);
 winform.button3.oncommand = function(id,event){
 	import sys.monitor;
 		import thread.event;
@@ -45,6 +48,16 @@ winform.button3.oncommand = function(id,event){
 			//frmChild.show(false)
 			console.log("for end")
 		}
+}
+
+winform.button4.oncommand = function(id,event){
+    var a=1;
+	while(true){
+		win.delay(100)
+		winform.progress.stepProgress(-a);
+		a++;
+	}
+	
 }
 
 winform.show();

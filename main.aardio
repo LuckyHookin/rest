@@ -30,7 +30,7 @@ listener.showCountdownPop = function(modeName,time_ms){
     				}
     				
     				var tray = win.util.tray();
-    				tray.pop("将在 "+(time_ms/1000)+" 秒后 "+name+"!")
+    				tray.pop("将在 "+(time_ms/1000)+"秒 后 "+name+"!")
 					sleep(5000-100);//提早关闭pop
 					tray.pop("","");
 					return true; 
