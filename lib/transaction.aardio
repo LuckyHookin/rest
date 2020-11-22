@@ -68,7 +68,7 @@ namespace transaction{
 			var frmChild = win.loadForm("\dlg\child.aardio");
 			win.setRect(frmChild.hwnd,monitorInfo.rcMonitor);
 			table.push(frmChildenArr,frmChild)
-			console.log("for end")
+			//console.log("for end")
 		}
 		
 		var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
@@ -86,7 +86,7 @@ namespace transaction{
 		//-30000是为弹出pop
 		while(!stopEvent.wait(freeTime-30000)){
 						anapNum+=1;
-						console.log(anapNum,freeAnapNum)
+						//console.log(anapNum,freeAnapNum)
 						if(anapNum>freeAnapNum&&config.setting.rest.userd){
 							//间隔AnapNum个小憩后，执行休息时间
 							anapNum=0;

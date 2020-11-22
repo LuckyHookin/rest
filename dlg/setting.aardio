@@ -58,25 +58,6 @@ frmChild.show();
 
 }
 
-
-
-winform.button2.oncommand = function(id,event){
-    import sys.monitor;
-	for( hMonitor,monitorInfo in sys.monitor.eachInfo() ){
-		
-		var frmChild = winform.loadForm("\dlg\child.aardio");
-		
-		win.setRect(frmChild.hwnd,monitorInfo.rcMonitor,true);
-		
-		win.setTopmost(frmChild.hwnd);
-		//frmChild.fullscreen()
-		win.setRect(frmChild.hwnd,monitorInfo.rcMonitor,true);
-	}
-
-}
-
-
-
 // 重置
 winform.reset.oncommand = function(id,event){	
     transaction.stop()
