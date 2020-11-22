@@ -44,7 +44,7 @@ winform.mainBtn.wndproc = function(hwnd,message,wParam,lParam){
 }
 
 var IntervalID=winform.setInterval( 
-	1000,function(){
+	-1,function(){
 		import time;
 		
 
