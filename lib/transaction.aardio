@@ -114,25 +114,27 @@ namespace transaction{
 						
 						//创建工作线程防止wait阻塞
 						win.invoke(
-							function(timeEvent,shareT,frmChildenArr){
+						function(timeEvent,shareT,frmChildenArr){
 							import win;
 							while(timeEvent.wait(shareT.showTime)&&shareT.hasLate){
-							if(shareT.lateNum<2){//可以稍等2次
-								shareT.lateNum+=1;
-								for(index,frmChild in frmChildenArr){
-									frmChild.show(false);
-								}
-								sleep(20000);
-								for(index,frmChild in frmChildenArr){
-									frmChild.show();
-								}
+								if(shareT.lateNum<2){//可以稍等2次
+									shareT.lateNum+=1;
+									for(index,frmChild in frmChildenArr){
+										frmChild.show(false);
+									}
+									sleep(10000)
+									thread.command.showCountdownPop(shareT.modeName,10000);
+									sleep(10000)
+									for(index,frmChild in frmChildenArr){
+										frmChild.show();
+									}
 								
-							}else {
-								shareT.lateNum=0;
-								break;
+								}else {
+									shareT.lateNum=0;
+									continue;
+								}
 							}
-							}
-							} 
+						} 
 						,timeEvent,shareT,frmChildenArr);
 						
 						

@@ -71,7 +71,7 @@ winform.wndproc = function(hwnd,message,wParam,lParam){
 		winform.progress.stepProgress(1000);
 		remainNum=shareT.showTime/1000;
 		winform.changeInterval(IntervalID,1000);
-		if(shareT.hasLate){
+		if(shareT.hasLate&&shareT.lateNum<2){
 			winform.mainBtn.text="⏳ 稍后提醒 (ctrl + x)"
 		}elseif(shareT.hasPass){
 			winform.mainBtn.text="⏳ 下次提醒 (ctrl + x)"
