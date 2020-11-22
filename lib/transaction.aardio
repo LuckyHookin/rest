@@ -116,6 +116,7 @@ namespace transaction{
 						win.invoke(
 						function(timeEvent,shareT,frmChildenArr){
 							import win;
+							import thread.command;
 							while(timeEvent.wait(shareT.showTime)&&shareT.hasLate){
 								if(shareT.lateNum<2){//可以稍等2次
 									shareT.lateNum+=1;
@@ -131,7 +132,7 @@ namespace transaction{
 								
 								}else {
 									shareT.lateNum=0;
-									continue;
+									break;
 								}
 							}
 						} 
