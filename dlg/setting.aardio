@@ -1,6 +1,6 @@
 import win.ui;
 /*DSG{{*/
-var winform = win.form(text="aardio form";right=351;bottom=567;max=false)
+var winform = win.form(text="休息一下 - 设置";right=351;bottom=567;max=false)
 winform.add(
 anap={cls="checkbox";text="小憩 - 稍作休息";left=24;top=48;right=264;bottom=72;checked=1;disabled=1;font=LOGFONT(h=-13;name='微软雅黑');z=4};
 anapFree={cls="static";text="1";left=264;top=80;right=296;bottom=96;font=LOGFONT(h=-13;name='微软雅黑');transparent=1;z=13};

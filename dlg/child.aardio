@@ -2,20 +2,14 @@ import win.ui;
 /*DSG{{*/
 var winform = win.form(text="休息一下";left=0;top=0;right=600;bottom=600;bgcolor=8421376;border="none";exmode="toolwindow";mode="popup")
 winform.add(
-button={cls="button";text="Button";left=464;top=152;right=764;bottom=202;aw=1;z=1};
-button2={cls="button";text="显示器";left=472;top=384;right=563;bottom=415;z=2};
-date={cls="static";text="11月11日 星期八";left=100;top=160;right=500;bottom=208;align="center";aw=1;color=15793151;font=LOGFONT(h=-27;name='微软雅黑');transparent=1;z=6};
-progress={cls="plus";left=200;top=360;right=400;bottom=372;aw=1;border={color=-1040;radius=10;width=2};forecolor=15793151;z=4};
-static={cls="static";text='\u23F3 稍后提醒 (ctrl + x)';left=100;top=540;right=500;bottom=570;align="center";aw=1;color=15793151;font=LOGFONT(h=-20;name='微软雅黑');notify=1;transparent=1;z=3};
-static2={cls="static";text="10s";left=200;top=368;right=400;bottom=392;align="center";aw=1;color=15793151;font=LOGFONT(h=-18;name='微软雅黑');transparent=1;z=8};
-static4={cls="static";text="活动身体，看向远方……";left=100;top=264;right=500;bottom=328;align="center";aw=1;color=15793151;font=LOGFONT(h=-37;name='微软雅黑');transparent=1;z=7};
-time={cls="static";text="11:11";left=200;top=72;right=400;bottom=152;align="center";aw=1;color=15793151;font=LOGFONT(h=-70;name='微软雅黑');ownerDraw=1;transparent=1;z=5}
+date={cls="static";text="11月11日 星期八";left=100;top=160;right=500;bottom=208;align="center";aw=1;color=15793151;font=LOGFONT(h=-27;name='微软雅黑');transparent=1;z=4};
+progress={cls="plus";left=200;top=360;right=400;bottom=372;aw=1;border={color=-1040;radius=10;width=2};forecolor=15793151;z=2};
+static={cls="static";text='\u23F3 稍后提醒 (ctrl + x)';left=100;top=540;right=500;bottom=570;align="center";aw=1;color=15793151;font=LOGFONT(h=-20;name='微软雅黑');notify=1;transparent=1;z=1};
+static2={cls="static";text="10s";left=200;top=368;right=400;bottom=392;align="center";aw=1;color=15793151;font=LOGFONT(h=-18;name='微软雅黑');transparent=1;z=6};
+static4={cls="static";text="活动身体，看向远方……";left=100;top=264;right=500;bottom=328;align="center";aw=1;color=15793151;font=LOGFONT(h=-37;name='微软雅黑');transparent=1;z=5};
+time={cls="static";text="11:11";left=200;top=72;right=400;bottom=152;align="center";aw=1;color=15793151;font=LOGFONT(h=-70;name='微软雅黑');ownerDraw=1;transparent=1;z=3}
 )
 /*}}*/
-
-winform.button.oncommand = function(id,event){
-	winform.close();
-}
 
 import thread.event;
 import thread.table;
@@ -36,22 +30,6 @@ var accelerator = win.ui.accelerator({
     };  
 },winform );
 
-winform.button2.oncommand = function(id,event){
-    
-	//winform.msgbox(::GetSystemMetrics(80))
-
-	//设置进度区间，可自动切换到进度条显示模式
-	
-	winform.progress.startProgress(,-1)
-
-	win.delay(10000);
-	winform.progress.stopProgress();
-	
-	//update(winform.time.hwnd,winform.date)
-	var timef = winform.time;
-	var date = winform.date;
-	//updateT(date,timef)
-}
 
 
 winform.static.oncommand = function(id,event){

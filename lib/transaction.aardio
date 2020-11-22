@@ -83,11 +83,11 @@ namespace transaction{
 		var freeAnapNum=tonumber(config.setting.rest.free_anap);
 		var anapNum=0;
 		
-		
+		//-30000是为弹出pop
 		while(!stopEvent.wait(freeTime-30000)){
 						anapNum+=1;
 						console.log(anapNum,freeAnapNum)
-						if(anapNum>freeAnapNum){
+						if(anapNum>freeAnapNum&&config.setting.rest.userd){
 							//间隔AnapNum个小憩后，执行休息时间
 							anapNum=0;
 							shareT.showTime=config.setting.rest.time_m*60*1000;
