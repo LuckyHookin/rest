@@ -37,11 +37,8 @@ namespace transaction{
 		return config;; 
 	};
 	function start(){
-			//将一个函数写入线程共享区(通常应当在主线程中一次性写入)
-		//thread.set("anapLateNum", 0);
-		
-		win.invoke( 
-			anap
+		thread.invoke( 
+			main
 		)
 		
 	};
@@ -49,7 +46,7 @@ namespace transaction{
 		
 	};
 	
-	function anap(){
+	function main(){
 		import win;
 		import table;
 		import thread;
