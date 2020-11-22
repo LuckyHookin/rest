@@ -79,6 +79,7 @@ winform.button2.oncommand = function(id,event){
 
 // 重置
 winform.reset.oncommand = function(id,event){	
+    transaction.stop()
 	transaction.resetConfig()
 	getConfig()
 }
@@ -187,9 +188,7 @@ winform.apple.oncommand = function(id,event){
 	setConfig();
 	
 	
-	var stopEvent = thread.event("stopEvent GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44",true)
-	stopEvent.set();
-	win.delay(1000)
+	transaction.stop();
 	//thread.create(anap,winform,transaction.getConfig())
 	transaction.start();
 }

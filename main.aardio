@@ -64,20 +64,43 @@ mainForm.wndproc = {
 
 mainForm.popmenu = win.ui.popmenu(mainForm);//创建弹出菜单
 
+import thread.event;
+import transaction;
+
+var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
+var stopEvent = thread.event("stopEvent GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 mainForm.popmenu.addTable( {
 	{ "设置";  function(id){
 		var frmSetting = mainForm.loadForm("\dlg\setting.aardio");// setting
 		frmSetting.show(true);
-	} }; { /*分隔线*/ }
+	} };
+	{ "暂停"; function(id){  
+		if(mainForm.popmenu.checked(2)){
+			mainForm.popmenu.check(2,false);
+			transaction.start();
+		}else {
+			mainForm.popmenu.check(2);
+			transaction.stop();
+		}
+		
+ 	} };{ /*分隔线*/ };
 	{ "退出"; function(id){  
 		tray.delete();
 		win.quitMessage();
  	} };
-} );//分隔线
+} );
 
 
+//mainForm.show();
+import fsys.config;
+if(fsys.config().setting==null){
+	
+	var frmChild = mainForm.loadForm("\dlg\setting.aardio");
+	frmChild.show();
 
-mainForm.show();
+}else {
+	transaction.start();
+}
 
 
 
