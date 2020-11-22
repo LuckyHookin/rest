@@ -93,7 +93,8 @@ mainForm.popmenu.addTable( {
 
 //mainForm.show();
 import fsys.config;
-if(fsys.config().setting==null){
+
+if(!fsys.config().setting.anap){
 	
 	var frmChild = mainForm.loadForm("\dlg\setting.aardio");
 	frmChild.show();

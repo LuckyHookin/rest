@@ -8,7 +8,7 @@ namespace transaction{
 	function getConfig(){
 		
 		var config=fsys.config();
-		if(config.setting!=null) return config;
+		if(config.setting.anap) return config;
 		return resetConfig(); 
 	};
 	function resetConfig(){
