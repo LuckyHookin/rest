@@ -16,6 +16,7 @@ import thread.table;
 var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 var shareT = thread.table("shareT");
 var remainNum=0;
+win.setTopmost(winform.hwnd);
 winform.progress.setProgressRange(0,1000);
 
 // 屏蔽 alt + F4；设置 ctrl + x 关闭
