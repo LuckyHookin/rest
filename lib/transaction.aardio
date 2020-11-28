@@ -73,7 +73,8 @@ namespace transaction{
 		
 		var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 		var stopEvent = thread.event("stopEvent GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
-		
+		timeEvent.reset();
+		stopEvent.reset();
 		
 		var shareT = thread.table("shareT");
 		shareT.lateNum=0;
@@ -126,9 +127,12 @@ namespace transaction{
 									for(index,frmChild in frmChildenArr){
 										frmChild.show(false);
 									}
-									sleep(10000)
+									//sleep(10000)
+									//如果触发暂停
+									if(timeEvent.wait(10000))break;
 									thread.command.showCountdownPop(shareT.modeName,10000);
-									sleep(10000)
+									//sleep(10000)
+									if(timeEvent.wait(10000))break;
 									for(index,frmChild in frmChildenArr){
 										frmChild.show();
 									}

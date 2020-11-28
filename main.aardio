@@ -13,12 +13,16 @@ var tray = win.util.tray(mainForm);//创建托盘图标
 tray.message = 0xACCF/*_WM_TRAYMESSAGE*/
 tray.tip = "休息提醒" //设置鼠标提示 
 
+mainForm.trayPop=function(text,title){
+	tray.pop(text,title);
+}
+
+
 import thread.command;
 var listener = thread.command();
 listener.showCountdownPop = function(modeName,time_ms){
     		thread.invoke( 
-    			function(modeName,time_ms){
-    				import win.util.tray;
+    			function(modeName,time_ms,mainForm){
     				var name;
     				if(modeName=="anap"){
     					name="小憩"
@@ -26,21 +30,18 @@ listener.showCountdownPop = function(modeName,time_ms){
     					name="休息"
     				}
     				
-    				var tray = win.util.tray();
-    				tray.pop("将在 "+(time_ms/1000)+"秒 后 "+name+"!")
+    				mainForm.trayPop("将在 "+(time_ms/1000)+"秒 后 "+name+"!")
 					sleep(5000-100);//提早关闭pop
-					tray.pop("","");
+					mainForm.trayPop("");
 					return true; 
     			}
-    		,modeName,time_ms)
+    		,modeName,time_ms,mainForm)
 }
 
 mainForm.button.oncommand = function(id,event){
 	tray.delete();
 	win.quitMessage();
 }
-
-
 
 mainForm.button2.oncommand = function(id,event){
 	
@@ -69,6 +70,23 @@ import transaction;
 
 var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 var stopEvent = thread.event("stopEvent GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
+
+var idleTimeStop=false;
+mainForm.setInterval( 
+	2*1000,function(){
+		//import console;
+		if(win.getIdleTime()>=5*60*1000&&idleTimeStop==false){
+			transaction.stop();
+			idleTimeStop=true;
+		}elseif(win.getIdleTime()<100&&idleTimeStop){
+			transaction.start();
+			idleTimeStop=false;
+			//console.log("idleTimeStop=*/true")
+		}
+		
+		//console.log("win.getIdleTime()"+win.getIdleTime())
+	} 
+)
 mainForm.popmenu.addTable( {
 	{ "设置";  function(id){
 		var frmSetting = mainForm.loadForm("\dlg\setting.aardio");// setting
@@ -77,6 +95,7 @@ mainForm.popmenu.addTable( {
 	{ "暂停"; function(id){  
 		if(mainForm.popmenu.checked(2)){
 			mainForm.popmenu.check(2,false);
+			transaction.stop();
 			transaction.start();
 		}else {
 			mainForm.popmenu.check(2);
@@ -85,6 +104,7 @@ mainForm.popmenu.addTable( {
 		
  	} };{ /*分隔线*/ };
 	{ "退出"; function(id){  
+		transaction.stop();
 		tray.delete();
 		win.quitMessage();
  	} };
