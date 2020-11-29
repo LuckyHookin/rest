@@ -79,6 +79,7 @@ mainForm.setInterval(
 			transaction.stop();
 			idleTimeStop=true;
 		}elseif(win.getIdleTime()<100&&idleTimeStop){
+			transaction.stop();
 			transaction.start();
 			idleTimeStop=false;
 			//console.log("idleTimeStop=*/true")

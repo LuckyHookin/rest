@@ -67,11 +67,13 @@ winform.wndproc = function(hwnd,message,wParam,lParam){
 		//在当前显示器全屏置顶
 		import sys.monitor;
 		win.setRect(winform.hwnd,sys.monitor.getInfoFromWindow( winform.hwnd).rcMonitor);
+		win.setForeground(winform.hwnd)
 		win.setTopmost(winform.hwnd);
 		
 		winform.progress.stepProgress(1000);
 		remainNum=shareT.showTime/1000;
 		winform.changeInterval(IntervalID,1000);
+		winform.mainBtn.show(true)
 		if(shareT.hasLate&&shareT.lateNum<2){
 			winform.mainBtn.text="⏳ 稍后提醒 (ctrl + x)"
 		}elseif(shareT.hasPass){
@@ -79,7 +81,7 @@ winform.wndproc = function(hwnd,message,wParam,lParam){
 		}else {
 			winform.mainBtn.show(false)
 		}
-		
+		return true; 
 		
 	}elseif(message=0x18/*_WM_SHOWWINDOW*/&&wParam=false){
 		winform.changeInterval(IntervalID,-1);

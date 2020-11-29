@@ -97,16 +97,16 @@ namespace transaction{
 							shareT.modeName="rest";
 							//console.log("休息")
 							thread.command.showCountdownPop(shareT.modeName,30000);
-							sleep(30000)
+							if(timeEvent.wait(30000))break;
 						}else {
 							shareT.showTime=config.setting.anap.time_s*1000;
 							shareT.hasLate=config.setting.late.anap;
 							shareT.hasPass=config.setting.pass.anap;
 							shareT.modeName="anap";
 							//console.log("小憩")
-							sleep(20000)
+							if(timeEvent.wait(20000))break;
 							thread.command.showCountdownPop(shareT.modeName,10000);
-							sleep(10000)
+							if(timeEvent.wait(10000))break;
 						}
 						
 						for(index,frmChild in frmChildenArr){
@@ -118,9 +118,11 @@ namespace transaction{
 						
 						//创建工作线程防止wait阻塞
 						win.invoke(
-						function(timeEvent,shareT,frmChildenArr){
+						function(shareT,frmChildenArr){
 							import win;
 							import thread.command;
+							import thread.event;
+							var timeEvent = thread.event("time_s GUID:3CDA0FC7-A96D-4850-9A28-DA1DD4464B44")
 							while(timeEvent.wait(shareT.showTime)&&shareT.hasLate){
 								if(shareT.lateNum<2){//可以稍等2次
 									shareT.lateNum+=1;
@@ -142,8 +144,9 @@ namespace transaction{
 									break;
 								}
 							}
+							shareT.lateNum=0;
 						} 
-						,timeEvent,shareT,frmChildenArr);
+						,shareT,frmChildenArr);
 						
 						
 						
