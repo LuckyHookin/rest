@@ -1,6 +1,6 @@
 # rest
 
-windows 平台休息提醒工具，使用 arrdio 语言编写。
+windows 平台休息提醒工具，使用 arrdio 语言编写。**不完善，将尝试用中介者模式重写。**
 
 ![](https://i.loli.net/2020/11/24/hbmoPYB7nEr1Cl6.png)
 
